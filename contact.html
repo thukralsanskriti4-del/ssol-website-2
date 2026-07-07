@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Contact Us | SSOL</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+
+background:#F7F2EA;
+
+font-family:'Manrope',sans-serif;
+
+color:#221A18;
+
+overflow-x:hidden;
+
+}
+
+:root{
+
+--cream:#F7F2EA;
+--white:#ffffff;
+
+--maroon:#8A1D22;
+
+--red:#C81E1E;
+
+--text:#221A18;
+
+--light:#786C66;
+
+--border:#E5D8C8;
+
+--shadow:0 25px 60px rgba(0,0,0,.08);
+
+}
+
+/* ---------- CUSTOM CURSOR ---------- */
+  @media(min-width:900px){
+    *{cursor:none;}
+    .cursor-dot{
+      position:fixed;top:0;left:0;
+      width:20px;height:20px;
+      pointer-events:none;z-index:10000;
+      transform:translate(-50%,-50%);
+    }
+    .cursor-dot svg{width:100%;height:100%;}
+    .cursor-ring{
+      position:fixed;top:0;left:0;
+      width:36px;height:36px;border-radius:50%;
+      border:1.5px solid #B08159;
+      pointer-events:none;z-index:9999;
+      transform:translate(-50%,-50%);
+      transition:width .25s ease, height .25s ease, border-color .25s ease, background .25s ease;
+    }
+    .cursor-ring.hovering{
+      width:54px;height:54px;
+      background:rgba(176,129,89,0.1);
+    }
+  }
+  @media(max-width:899px){
+    .cursor-dot, .cursor-ring{display:none;}
+  }
+
+a{text-decoration:none;color:inherit;}
+img{max-width:100%;display:block;}
+
+/* ---------- NAV ---------- */
+header{
+  position:sticky;top:0;left:0;right:0;z-index:100;
+  background:rgba(247,242,234,0.95);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+}
+nav{
+  max-width:1280px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 24px;
+}
+.brand{display:flex;align-items:center;}
+.brand img{height:38px;width:auto;}
+nav ul{display:flex;gap:26px;list-style:none;flex-wrap:wrap;}
+nav ul li a{
+  font-size:13px;font-weight:600;letter-spacing:0.04em;
+  color:var(--text);transition:color .2s ease;
+}
+nav ul li a:hover{color:var(--red);}
+.nav-cta{
+  background:var(--red);color:#fff;
+  padding:11px 24px;font-size:12.5px;font-weight:700;
+  border-radius:100px;letter-spacing:0.03em;white-space:nowrap;
+}
+.nav-cta:hover{background:var(--maroon);}
+
+.contact-wrapper{
+
+max-width:1200px;
+
+margin:auto;
+
+padding:80px 20px;
+
+}
+
+.contact-heading{
+
+text-align:center;
+
+margin-bottom:70px;
+
+}
+
+.contact-heading h1{
+
+font-family:'Fraunces',serif;
+
+font-size:52px;
+
+font-weight:600;
+
+color:#221A18;
+
+margin-bottom:18px;
+
+}
+
+.contact-heading p{
+
+font-size:17px;
+
+color:#6D625C;
+
+max-width:620px;
+
+margin:auto;
+
+line-height:1.8;
+
+}
+
+.heading-divider{
+
+width:120px;
+
+height:2px;
+
+background:#D9C7AF;
+
+margin:30px auto;
+
+position:relative;
+
+}
+
+.heading-divider::after{
+
+content:"◆";
+
+position:absolute;
+
+left:50%;
+
+top:-13px;
+
+transform:translateX(-50%);
+
+background:#F7F2EA;
+
+padding:0 12px;
+
+font-size:18px;
+
+color:#8A1D22;
+
+}
+
+.contact-card{
+
+background:white;
+
+border-radius:30px;
+
+padding:60px;
+
+box-shadow:var(--shadow);
+
+border:1px solid var(--border);
+
+display:grid;
+
+grid-template-columns:40% 60%;
+
+align-items:center;
+
+gap:30px;
+
+margin-bottom:45px;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.contact-card::before{
+
+content:"";
+
+position:absolute;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:6px;
+
+background:linear-gradient(
+90deg,
+#7A1315,
+#C81E1E,
+#D6B36D
+);
+
+}
+
+.contact-card:hover{
+
+transform:translateY(-10px);
+
+transition:.45s;
+
+box-shadow:
+0 30px 70px rgba(0,0,0,.10),
+0 40px 90px rgba(138,29,34,.12);
+
+}
+
+.tree{
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+.tree img{
+
+width:100%;
+
+max-width:530px;
+
+transition:.45s;
+
+filter:drop-shadow(0 20px 35px rgba(138,29,34,.18));
+
+}
+
+.contact-details{
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:flex-start;
+
+height:100%;
+
+padding-left:40px;
+
+}
+
+.contact-item{
+
+display:flex;
+
+align-items:center;
+
+gap:16px;
+
+width:100%;
+
+margin:18px 0;
+
+font-size:22px;
+
+font-weight:600;
+
+}
+
+.contact-item svg{
+
+width:22px;
+
+height:22px;
+
+color:#8A1D22;
+
+}
+
+.contact-item a{
+
+text-decoration:none;
+
+color:#8A1D22;
+
+transition:.3s;
+
+}
+
+.contact-item a:hover{
+
+color:#C81E1E;
+
+}
+
+.contact-item i{
+
+width:44px;
+height:44px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+background:#F8F3ED;
+
+border-radius:50%;
+
+font-size:18px;
+
+color:#8A1D22;
+
+flex-shrink:0;
+font-style:normal;
+
+}
+
+.contact-item span{
+
+display:flex;
+flex-direction:column;
+gap:6px;
+
+font-size:22px;
+
+font-weight:600;
+
+letter-spacing:.3px;
+
+}
+
+.contact-item.phones span{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:6px 24px;
+  }
+.contact-item small{
+
+display:block;
+
+margin-top:4px;
+
+font-size:14px;
+
+color:#777;
+
+font-weight:500;
+
+}
+
+.contact-item:hover{
+
+transform:translateX(6px);
+
+transition:.35s ease;
+
+}
+
+.contact-item:hover i{
+
+background:#8A1D22;
+
+color:white;
+
+}
+
+.email-divider{
+
+width:75%;
+
+height:1px;
+
+background:#E8DED2;
+
+margin:18px auto;
+
+}
+
+.bottom-grid{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:25px;
+
+}
+
+.info-card{
+
+background:white;
+
+border-radius:25px;
+
+padding:35px;
+
+border:1px solid var(--border);
+
+box-shadow:var(--shadow);
+
+}
+
+.info-card:hover{
+
+transform:translateY(-8px);
+
+transition:.4s;
+
+box-shadow:0 35px 70px rgba(0,0,0,.12);
+
+}
+
+.info-card h3{
+
+font-family:'Fraunces',serif;
+
+font-size:24px;
+
+margin-bottom:20px;
+
+color:#8A1D22;
+
+}
+
+.info-card p{
+
+line-height:1.9;
+
+font-size:16px;
+
+color:#555;
+
+}
+
+.office-card{
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+}
+
+.office-card h4{
+
+font-size:14px;
+
+letter-spacing:2px;
+
+text-transform:uppercase;
+
+color:#C81E1E;
+
+margin-bottom:14px;
+
+}
+
+.office-card h2{
+
+font-family:'Fraunces',serif;
+
+font-size:32px;
+
+margin-bottom:20px;
+
+}
+
+.office-card p{
+
+font-size:16px;
+
+line-height:2;
+
+color:#666;
+
+}
+
+.map-card{
+
+padding:15px;
+
+}
+
+.map-card iframe{
+
+border-radius:18px;
+
+box-shadow:0 20px 40px rgba(0,0,0,.08);
+
+}
+
+.map{
+
+overflow:hidden;
+
+border-radius:18px;
+
+height:100%;
+
+min-height:280px;
+
+}
+
+.map iframe{
+
+width:100%;
+
+height:100%;
+
+border:none;
+
+}
+
+/* ---------- FOOTER ---------- */
+footer{
+  background:#221A18;
+  background-image:
+    radial-gradient(circle at 0 0, transparent 24%, rgba(201,162,75,0.04) 25%, rgba(201,162,75,0.04) 26%, transparent 27%, transparent 74%, rgba(201,162,75,0.04) 75%, rgba(201,162,75,0.04) 76%, transparent 77%, transparent),
+    radial-gradient(circle at 50% 50%, transparent 24%, rgba(201,162,75,0.04) 25%, rgba(201,162,75,0.04) 26%, transparent 27%, transparent 74%, rgba(201,162,75,0.04) 75%, rgba(201,162,75,0.04) 76%, transparent 77%, transparent);
+  background-size:60px 60px;
+  color:#C9C0BB;padding:64px 24px 28px;
+}
+.footer-inner{
+  max-width:1280px;margin:0 auto;
+  display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;
+  margin-bottom:48px;
+}
+footer h4{color:#E4453C;font-size:12.5px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;}
+footer p{font-size:13.5px;color:#A79E98;max-width:320px;}
+footer ul{list-style:none;font-size:13.5px;}
+footer ul li{margin-bottom:10px;color:#A79E98;}
+.footer-social{display:flex;gap:12px;margin-top:18px;}
+.footer-social a{
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,0.08);
+  display:flex;align-items:center;justify-content:center;
+  transition:.2s ease;
+}
+.footer-social a:hover{background:var(--red);}
+.footer-social svg{width:16px;height:16px;color:#fff;}
+.footer-bottom{
+  border-top:1px solid #382E2C;padding-top:24px;
+  max-width:1280px;margin:0 auto;
+  font-size:12px;color:#7d746f;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+}
+
+@media(max-width:900px){
+
+nav ul{display:none;}
+
+.contact-card{
+
+grid-template-columns:1fr;
+
+text-align:center;
+
+padding:65px 40px;
+
+}
+
+.tree img{
+
+width:100%;
+
+max-width:340px;
+
+margin:0 auto;
+
+}
+
+.contact-details{
+
+align-items:center;
+
+padding-left:0;
+
+}
+
+.bottom-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.contact-heading h1{
+
+font-size:40px;
+
+}
+
+.contact-item{
+
+font-size:18px;
+
+justify-content:center;
+
+}
+
+.footer-inner{grid-template-columns:1fr;}
+
+}
+
+@media(max-width:768px){
+
+.contact-wrapper{
+
+padding:60px 18px;
+
+}
+
+.contact-heading p{
+
+font-size:15px;
+
+}
+
+.bottom-grid{
+
+gap:18px;
+
+}
+
+.info-card{
+
+padding:24px;
+
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+    <div class="cursor-dot" id="cursorDot">
+  <svg viewBox="0 0 24 24" fill="none">
+    <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17 1 .1 1.5.1 3.5 0 5.5-2 8-6 1.5-2.5 2-4.5 2-4.5s-2.7.62-5 1.5c-2.5 1-4 2.5-4 2.5s.8-3.5 4-5.5c3-2 8-4.5 8-4.5s-1.3 4.5-4.16 5.7z" fill="#C9A24B"/>
+  </svg>
+</div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<header id="siteHeader">
+  <nav>
+    <a href="index.html" class="brand"><img src="logo.png.png" alt="SSOL Logo"></a>
+    <ul>
+      <li><a href="index.html#overview">Overview</a></li>
+      <li><a href="index.html#products">Products</a></li>
+      <li><a href="index.html#facilities">Facilities</a></li>
+      <li><a href="waste-handled.html">Waste Handled</a></li>
+      <li><a href="index.html#certifications">Certifications</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Contact</a>
+  </nav>
+</header>
+
+<div class="contact-wrapper">
+
+<div class="contact-heading">
+
+<h1>Let's Connect</h1>
+
+<div class="heading-divider"></div>
+
+<p>
+We'd love to hear from you. Reach out to us for waste management solutions,
+industrial lubricants or any business enquiry.
+</p>
+
+</div>
+<div class="contact-card">
+
+    <!-- LEFT TREE -->
+
+    <div class="tree">
+
+        <img src="banyan-tree.png" alt="SSOL Tree">
+
+    </div>
+
+    <!-- RIGHT CONTACT DETAILS -->
+
+    <div class="contact-details">
+
+        <div class="contact-item phones">
+
+            <i>☎</i>
+
+            <span>
+
+                <a href="tel:+919799932921">+91 97999 32921</a>
+
+                <a href="tel:+919818408248">+91 98184 08248</a>
+
+                <a href="tel:+919891470944">+91 98914 70944</a>
+
+                <a href="tel:+919310002239">+91 93100 02239</a>
+
+            </span>
+
+        </div>
+
+        <div class="email-divider"></div>
+
+        <div class="contact-item">
+
+            <i>✉</i>
+
+            <span>
+
+                <a href="mailto:info@ssolindia.com">info@ssolindia.com</a>
+
+                <a href="mailto:wastemanagement@ssolindia.com">wastemanagement@ssolindia.com</a>
+
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="bottom-grid">
+
+    <!-- Office Address -->
+
+    <div class="info-card office-card">
+
+        <h4>OUR OFFICE</h4>
+
+        <h2>Office Address</h2>
+
+        <p>
+
+            F-21, First Floor<br>
+
+            Ashiana Garden Shopping Complex<br>
+
+            Bhiwadi – 301019<br>
+
+            Rajasthan, India
+
+        </p>
+
+    </div>
+
+    <!-- Google Map -->
+
+    <div class="info-card map-card">
+
+        <div class="map">
+
+            <iframe
+                src="https://maps.google.com/maps?q=Ashiana%20Garden%20Shopping%20Complex%2C%20Bhiwadi%2C%20Rajasthan&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                loading="lazy"
+                allowfullscreen>
+            </iframe>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <img src="logo.png.png" alt="SSOL Logo" style="height:42px;width:auto;margin-bottom:16px;filter:brightness(1.15);">
+      <p>Shiv Shakti Oil & Lubricants — premium quality lubricants for automotive and industrial use, based in Bhiwadi, Rajasthan.</p>
+      <div class="footer-social">
+        <a href="https://www.linkedin.com/company/shiv-shakti-oil-lubricants/" target="_blank" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 18.34V9.75H5.67v8.59h2.67zM7 8.6a1.55 1.55 0 1 0 0-3.1 1.55 1.55 0 0 0 0 3.1zm11.34 9.74v-4.7c0-2.52-1.35-3.69-3.15-3.69-1.45 0-2.1.8-2.46 1.36v-1.17h-2.67c.03.75 0 8.2 0 8.2h2.67v-4.58c0-.24.02-.49.09-.66.2-.49.65-1 1.4-1 .99 0 1.38.75 1.38 1.85v4.39h2.74z"/></svg>
+        </a>
+        <a href="mailto:info@ssolindia.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="m4 4 8 8 8-8"/></svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html#overview">Overview</a></li>
+        <li><a href="index.html#products">Products</a></li>
+        <li><a href="index.html#facilities">Facilities</a></li>
+        <li><a href="waste-handled.html">Waste Handled</a></li>
+        <li><a href="index.html#certifications">Certifications</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li>Bhiwadi, Rajasthan</li>
+        <li><a href="mailto:info@ssolindia.com" style="color:inherit;">info@ssolindia.com</a></li>
+        <li>+91 981 840 8248</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Shiv Shakti Oil & Lubricants. All rights reserved.</span>
+    <span>Premium Quality Lubricants</span>
+  </div>
+</footer>
+<script>
+  const cursorDot = document.getElementById('cursorDot');
+  const cursorRing = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursorDot.style.left = mouseX + 'px';
+    cursorDot.style.top = mouseY + 'px';
+  });
+
+  function animateRing(){
+    ringX += (mouseX - ringX) * 0.15;
+    ringY += (mouseY - ringY) * 0.15;
+    cursorRing.style.left = ringX + 'px';
+    cursorRing.style.top = ringY + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button, input, textarea').forEach(el => {
+    el.addEventListener('mouseenter', () => cursorRing.classList.add('hovering'));
+    el.addEventListener('mouseleave', () => cursorRing.classList.remove('hovering'));
+  });
+</script>
+
+</body>
+
+</html>

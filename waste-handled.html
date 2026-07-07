@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Waste Categories Handled — SSOL</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+  :root{
+    --cream:#F7F2EA;
+    --cream-deep:#EFE6D8;
+    --ink:#221A18;
+    --ink-soft:#6E625C;
+    --red:#C81E1E;
+    --red-deep:#7A1315;
+    --red-glow:#E4453C;
+    --clay:#B08159;
+    --line:#E2D6C4;
+  }
+
+  /* ---------- CUSTOM CURSOR ---------- */
+  @media(min-width:900px){
+    *{cursor:none;}
+    .cursor-dot{
+      position:fixed;top:0;left:0;
+      width:20px;height:20px;
+      pointer-events:none;z-index:10000;
+      transform:translate(-50%,-50%);
+    }
+    .cursor-dot svg{width:100%;height:100%;}
+    .cursor-ring{
+      position:fixed;top:0;left:0;
+      width:36px;height:36px;border-radius:50%;
+      border:1.5px solid #B08159;
+      pointer-events:none;z-index:9999;
+      transform:translate(-50%,-50%);
+      transition:width .25s ease, height .25s ease, border-color .25s ease, background .25s ease;
+    }
+    .cursor-ring.hovering{
+      width:54px;height:54px;
+      background:rgba(176,129,89,0.1);
+    }
+  }
+  @media(max-width:899px){
+    .cursor-dot, .cursor-ring{display:none;}
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+ body{
+    background:var(--cream) url('waste-bg.jpg');
+    background-size:cover;
+    background-attachment:fixed;
+    background-position:center;
+    color:var(--ink);
+    font-family:'Manrope',sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.brand{font-family:'Fraunces',serif;}
+  a{text-decoration:none;color:inherit;}
+  img{max-width:100%;display:block;}
+
+  .reveal{opacity:0;transform:translateY(36px);transition:opacity .8s ease, transform .8s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;top:0;left:0;right:0;z-index:100;
+    background:rgba(247,242,234,0.95);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    max-width:1280px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 24px;
+  }
+  .brand{display:flex;align-items:center;}
+  .brand img{height:38px;width:auto;}
+  nav ul{display:flex;gap:28px;list-style:none;flex-wrap:wrap;}
+  nav ul li a{
+    font-size:13px;font-weight:600;letter-spacing:0.04em;
+    color:var(--ink);transition:color .2s ease;
+  }
+  nav ul li a:hover{color:var(--red-glow);}
+  .nav-cta{
+    background:var(--red);color:#fff;
+    padding:11px 24px;font-size:12.5px;font-weight:700;
+    border-radius:100px;letter-spacing:0.03em;white-space:nowrap;
+  }
+  .nav-cta:hover{background:var(--red-deep);}
+
+  /* ---------- PAGE HERO ---------- */
+ .page-hero{
+    background:
+      radial-gradient(circle at 50% 0%, rgba(200,30,30,0.5), transparent 60%),
+      linear-gradient(180deg, rgba(60,15,12,0.7) 0%, rgba(30,10,8,0.85) 100%),
+      linear-gradient(135deg, #4A1512 0%, #2A0D0A 100%);
+    color:#fff;padding:80px 24px 60px;text-align:center;
+  }
+  .page-hero .eyebrow{
+    font-size:12.5px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;
+    color:var(--red-glow);margin-bottom:18px;display:inline-block;
+  }
+  .page-hero h1{font-size:44px;font-weight:600;margin-bottom:16px;}
+  .page-hero p{color:#E7DFD8;font-size:15.5px;max-width:600px;margin:0 auto;}
+  .back-link{
+    display:inline-flex;align-items:center;gap:8px;margin-top:28px;
+    font-size:13px;font-weight:600;color:#E7DFD8;border:1px solid rgba(255,255,255,0.3);
+    padding:10px 22px;border-radius:100px;transition:.2s ease;
+  }
+  .back-link:hover{background:rgba(255,255,255,0.1);border-color:#fff;color:#fff;}
+
+  /* ---------- SECTION SHARED ---------- */
+  section{padding:70px 24px 110px;}
+  .section-inner{max-width:1280px;margin:0 auto;}
+
+  /* ---------- WASTE CATEGORIES ---------- */
+  .waste-intro{
+    background:var(--cream-deep);border:1px solid var(--line);border-radius:18px;
+    padding:28px 32px;margin-bottom:26px;font-size:16.5px;color:var(--ink-soft);
+  }
+  .waste-intro b{color:var(--red-deep);}
+  .waste-search{
+    width:100%;padding:14px 20px;border:1px solid var(--line);border-radius:100px;
+    font-family:'Manrope',sans-serif;font-size:14px;margin-bottom:24px;
+    background:#fff;
+  }
+  .waste-search:focus{outline:none;border-color:var(--red);}
+  .waste-list{display:flex;flex-direction:column;gap:14px;}
+  .waste-cat{
+    background:#fff;border:1px solid var(--line);border-left:4px solid var(--red);
+    border-radius:10px;padding:22px 28px;
+  }
+  .waste-cat-head{display:flex;gap:14px;align-items:baseline;margin-bottom:16px;
+    border-bottom:1px solid var(--line);padding-bottom:12px;
+  }
+  .waste-cat-num{
+    font-family:'Fraunces',serif;font-weight:700;color:#462052;
+    font-size:17px;min-width:30px;
+  }
+  .waste-cat-title{
+    font-family:'Fraunces',serif;font-size:16px;font-weight:600;
+    color:#462052;letter-spacing:0.01em;
+  }
+  .waste-sub-list li{
+    font-family:'Fraunces',serif;
+    font-size:14px;color:var(--red-deep);line-height:1.6;
+  }
+  .waste-sub-list li b{
+    color:var(--ink);font-weight:700;margin-right:8px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--ink);
+    background-image:
+      radial-gradient(circle at 0 0, transparent 24%, rgba(201,162,75,0.04) 25%, rgba(201,162,75,0.04) 26%, transparent 27%, transparent 74%, rgba(201,162,75,0.04) 75%, rgba(201,162,75,0.04) 76%, transparent 77%, transparent),
+      radial-gradient(circle at 50% 50%, transparent 24%, rgba(201,162,75,0.04) 25%, rgba(201,162,75,0.04) 26%, transparent 27%, transparent 74%, rgba(201,162,75,0.04) 75%, rgba(201,162,75,0.04) 76%, transparent 77%, transparent);
+    background-size:60px 60px;
+    color:#C9C0BB;padding:64px 24px 28px;
+  }
+  .footer-inner{
+    max-width:1280px;margin:0 auto;
+    display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;
+    margin-bottom:48px;
+  }
+  footer h4{color:var(--red-glow);font-size:12.5px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;}
+  footer p{font-size:13.5px;color:#A79E98;max-width:320px;}
+  footer ul{list-style:none;font-size:13.5px;}
+  footer ul li{margin-bottom:10px;color:#A79E98;}
+  .footer-social{display:flex;gap:12px;margin-top:18px;}
+  .footer-social a{
+    width:36px;height:36px;border-radius:50%;
+    background:rgba(255,255,255,0.08);
+    display:flex;align-items:center;justify-content:center;
+    transition:.2s ease;
+  }
+  .footer-social a:hover{background:var(--red);}
+  .footer-social svg{width:16px;height:16px;color:#fff;}
+  .footer-bottom{
+    border-top:1px solid #382E2C;padding-top:24px;
+    max-width:1280px;margin:0 auto;
+    font-size:12px;color:#7d746f;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+  }
+
+  @media(max-width:900px){
+    nav ul{display:none;}
+    .page-hero h1{font-size:30px;}
+    .waste-sub-list{grid-template-columns:1fr;}
+    .footer-inner{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="cursor-dot" id="cursorDot">
+  <svg viewBox="0 0 24 24" fill="none">
+    <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17 1 .1 1.5.1 3.5 0 5.5-2 8-6 1.5-2.5 2-4.5 2-4.5s-2.7.62-5 1.5c-2.5 1-4 2.5-4 2.5s.8-3.5 4-5.5c3-2 8-4.5 8-4.5s-1.3 4.5-4.16 5.7z" fill="#C9A24B"/>
+  </svg>
+</div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<header id="siteHeader">
+  <nav>
+    <a href="index.html" class="brand"><img src="logo.png.png" alt="SSOL Logo"></a>
+    <ul>
+      <li><a href="index.html#overview">Overview</a></li>
+      <li><a href="index.html#products">Products</a></li>
+      <li><a href="index.html#facilities">Facilities</a></li>
+      <li><a href="waste-handled.html">Waste Handled</a></li>
+      <li><a href="index.html#certifications">Certifications</a></li>
+      <li><a href="index.html#why">Why Us</a></li>
+    </ul>
+    <a href="index.html#contact" class="nav-cta">Contact</a>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <span class="eyebrow">Permitted Categories</span>
+  <h1>Hazardous Waste We Handle</h1>
+  <p>SSOL is authorized by CPCB and SPCBs to handle 100+ Hazardous Waste sub-categories under Schedule-I, spanning petrochemical, metal, pharmaceutical, textile, and chemical industries.</p>
+  <a href="index.html" class="back-link">← Back to Home</a>
+</div>
+
+<section>
+  <div class="section-inner">
+    <div class="waste-intro reveal">
+      Use the search box below to quickly find a process category or specific waste type. Click any category to see full sub-item details.
+    </div>
+    <input type="text" class="waste-search" id="wasteSearch" placeholder="Search a process or waste type...">
+    <div class="waste-list" id="wasteList"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <img src="logo.png.png" alt="SSOL Logo" style="height:42px;width:auto;margin-bottom:16px;filter:brightness(1.15);">
+      <p>Shiv Shakti Oil & Lubricants — premium quality lubricants for automotive and industrial use, based in Bhiwadi, Rajasthan.</p>
+      <div class="footer-social">
+        <a href="https://www.linkedin.com/company/shiv-shakti-oil-lubricants/" target="_blank" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 18.34V9.75H5.67v8.59h2.67zM7 8.6a1.55 1.55 0 1 0 0-3.1 1.55 1.55 0 0 0 0 3.1zm11.34 9.74v-4.7c0-2.52-1.35-3.69-3.15-3.69-1.45 0-2.1.8-2.46 1.36v-1.17h-2.67c.03.75 0 8.2 0 8.2h2.67v-4.58c0-.24.02-.49.09-.66.2-.49.65-1 1.4-1 .99 0 1.38.75 1.38 1.85v4.39h2.74z"/></svg>
+        </a>
+        <a href="mailto:info@ssolindia.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="m4 4 8 8 8-8"/></svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html#overview">Overview</a></li>
+        <li><a href="index.html#products">Products</a></li>
+        <li><a href="index.html#facilities">Facilities</a></li>
+        <li><a href="waste-handled.html">Waste Handled</a></li>
+        <li><a href="index.html#certifications">Certifications</a></li>
+        <li><a href="index.html#why">Why Us</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li>Bhiwadi, Rajasthan</li>
+        <li><a href="mailto:info@ssolindia.com" style="color:inherit;">info@ssolindia.com</a></li>
+        <li>+91 981 840 8248</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Shiv Shakti Oil & Lubricants. All rights reserved.</span>
+    <span>Premium Quality Lubricants</span>
+  </div>
+</footer>
+
+<script>
+  const cursorDot = document.getElementById('cursorDot');
+  const cursorRing = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursorDot.style.left = mouseX + 'px';
+    cursorDot.style.top = mouseY + 'px';
+  });
+
+  function animateRing(){
+    ringX += (mouseX - ringX) * 0.15;
+    ringY += (mouseY - ringY) * 0.15;
+    cursorRing.style.left = ringX + 'px';
+    cursorRing.style.top = ringY + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button, input, textarea').forEach(el => {
+    el.addEventListener('mouseenter', () => cursorRing.classList.add('hovering'));
+    el.addEventListener('mouseleave', () => cursorRing.classList.remove('hovering'));
+  });
+  const wasteData = [
+    {no:1, title:"Petrochemical processes and pyrolytic operations", items:["Furnace/Reactor residue and debris","Tarry Residues and Still Bottoms from Distillation","Oily Sludge Emulsion","Organic Residues","Residues from Alkali Wash of Fuels","Spent Catalyst and Molecular Sieves","Slop Oil from Wastewater Treatment"]},
+    {no:2, title:"Crude oil and natural gas production", items:["Drill cutting excluding those from water based mud","Sludge Containing Oil","Drilling Mud Containing Oil"]},
+    {no:3, title:"Cleaning, emptying and maintenance of petroleum oil storage tanks including ships", items:["Cargo Residue, Washing Water and Sludge Containing Oil","Cargo Residue and Sludge Containing Chemicals","Sludge and Filters Contaminated with Oil","Ballast Water Containing Oil from Ships"]},
+    {no:4, title:"Petroleum refining or re-processing of used oil or recycling of waste oil", items:["Oil Sludge or Emulsion","Spent Catalyst","Slop Oil","Organic Residue from Processes","Spent Clay Containing Oil"]},
+    {no:5, title:"Industrial operations using mineral or synthetic oil as lubricant", items:["Used or Spent Oil","Wastes or Residues Containing Oil","Waste Cutting Oils"]},
+    {no:6, title:"Secondary production and/or industrial use of zinc", items:["Sludge and Filter Press Cake from Zinc Sulphate & Zinc Compounds","Zinc fines/dust/ash/skimmings (dispersible form)","Other Residues from Processing of Zinc Ash or Skimmings","Flue Gas Dust and Other Particulates"]},
+    {no:7, title:"Primary production of zinc, lead, copper and other non-ferrous metals (except aluminium)", items:["Flue gas dust from roasting","Process Residues","Arsenic-Bearing Sludge","Non-Ferrous Metal Bearing Sludge and Residue","Sludge from Scrubbers"]},
+    {no:8, title:"Secondary production of copper", items:["Spent electrolytic solutions","Sludge and Filter Cakes","Flue Gas Dust and Other Particulates"]},
+    {no:9, title:"Secondary production of lead", items:["Acid from Used Batteries"]},
+    {no:10, title:"Production and/or industrial use of cadmium and arsenic and their compounds", items:["Residues containing cadmium and arsenic"]},
+    {no:11, title:"Production of primary and secondary aluminium", items:["Sludges from gas treatment","Cathode residues including pot lining wastes","Tar Containing Wastes","Flue gas dust and other Particulates","Drosses and waste from treatment of salt sludge","Used anode butts","Vanadium sludge from alumina Refineries"]},
+    {no:12, title:"Metal surface treatment (etching, staining, polishing, galvanizing, cleaning, degreasing, plating, etc.)", items:["Acidic and Alkaline Residues","Spent acid and alkali","Spent bath/sludge containing sulphide, cyanide and toxic metals","Sludge from Bath Containing Organic Solvents","Phosphate Sludge","Sludge from Staining Bath","Copper etching residues","Plating metal sludge"]},
+    {no:13, title:"Production of iron and steel including other ferrous alloys", items:["Spent pickling liquor","Sludge from acid recovery Unit","Benzol Acid Sludge","Decanter Tank Tar Sludge","Tar Storage Tank Residue","Residues from Coke Oven By-Product Plant"]},
+    {no:14, title:"Hardening of steel", items:["Cyanide-, nitrate-, or nitrite-containing sludge","Spent hardening salt"]},
+    {no:16, title:"Production of caustic soda and chlorine", items:["Mercury bearing sludge from mercury cell process","Residue/Sludges and filter Cakes","Brine sludge containing mercury"]},
+    {no:17, title:"Production of mineral acids", items:["Residues, dusts or filter cakes","Spent catalyst"]},
+    {no:18, title:"Production of nitrogenous and complex fertilizers", items:["Spent Catalyst","Carbon Residue/Spent Carbon","Sludge/residue containing Arsenic","Chromium sludge from water cooling tower"]},
+    {no:19, title:"Production of phenol", items:["Residue Or Sludge Containing Phenol","Spent catalyst"]},
+    {no:20, title:"Production and/or industrial use of solvents", items:["Contaminated Aromatic, Aliphatic or Naphthenic Solvents","Spent Solvents","Distillation Residues","Process Sludge"]},
+    {no:21, title:"Production and/or industrial use of paints, pigments, lacquers, varnishes and inks", items:["Process Wastes, Residues and Sludges","Spent Solvent"]},
+    {no:22, title:"Production of plastics", items:["Spent catalysts","Process Residues"]},
+    {no:23, title:"Production and/or industrial use of glues, organic cements, adhesives and resins", items:["Wastes or Residues (Not Made With Vegetable or Animal Materials)","Spent Solvents"]},
+    {no:24, title:"Production of canvas and textiles", items:["Chemical Residues"]},
+    {no:25, title:"Industrial production and formulation of wood preservatives", items:["Chemical Residues","Residues from Wood Alkali Bath"]},
+    {no:26, title:"Production or industrial use of synthetic dyes, dye intermediates and pigments", items:["Process waste, sludge/residues containing acid or toxic metals, or organic compounds","Dust from Air Filtration System","Spent acid","Spent Solvent","Spent catalyst"]},
+    {no:27, title:"Production of organic-silicone compound", items:["Process Residues"]},
+    {no:28, title:"Production/formulation of drugs, pharmaceutical and health care products", items:["Process Residue and Wastes","Spent Catalyst","Spent carbon","Off-Specification Products","Date-Expired Products","Spent Solvents"]},
+    {no:29, title:"Production and formulation of pesticides including stock-piles", items:["Process Wastes or Residues","Sludge Containing Residual Pesticides","Date-Expired and Off-Specification Pesticides","Spent Solvents","Spent catalysts","Spent acids"]},
+    {no:30, title:"Leather tanneries", items:["Chromium bearing residue and sludge"]},
+    {no:31, title:"Electronic Industry", items:["Process Residue And Wastes","Spent Etching Chemicals and Solvents"]},
+    {no:32, title:"Pulp and Paper Industry", items:["Spent Chemicals","Corrosive Wastes from Use of Strong Acid and Bases","Process Sludge Containing Absorbable Organic Halides (AOX)"]},
+    {no:33, title:"Handling of hazardous chemicals and wastes", items:["Empty Barrels/Containers/Liners Contaminated with Hazardous Chemicals/Wastes","Contaminated Cotton Rags or Other Cleaning Materials"]},
+    {no:34, title:"De-contamination of barrels/containers used for hazardous wastes/chemicals", items:["Chemical-Containing Residue Arising From Decontamination","Sludge from Treatment of Waste Water from Cleaning/Disposal of Barrels/Containers"]},
+    {no:35, title:"Purification/treatment of exhaust air, gases, water, wastewater & CETPs", items:["Exhaust Air or Gas cleaning residue","Spent ion exchange resin containing Toxic metals","Chemical Sludge from Waste Water Treatment","Oil and Grease Skimming","Chromium sludge from cooling water"]},
+    {no:36, title:"Purification process for organic compounds/solvents", items:["Any Process or Distillation Residue","Spent Carbon or Filter Medium"]},
+    {no:37, title:"Hazardous waste treatment processes (pre-processing, incineration, concentration)", items:["Sludge from Wet Scrubbers","Ash from incinerator and flue gas cleaning residues","Concentration or Evaporation Residues"]},
+    {no:38, title:"Chemical processing of Ores containing heavy metals (Chromium, Manganese, Nickel, Cadmium etc.)", items:["Process Residues","Spent Acid"]}
+  ];
+
+  const wasteList = document.getElementById('wasteList');
+  function renderWasteList(filter=''){
+    const f = filter.toLowerCase();
+    const filtered = wasteData.filter(cat =>
+      !f || cat.title.toLowerCase().includes(f) || cat.items.some(i => i.toLowerCase().includes(f))
+    );
+    wasteList.innerHTML = filtered.map(cat => `
+      <div class="waste-cat">
+        <div class="waste-cat-head">
+          <span class="waste-cat-num">${cat.no}.</span>
+          <span class="waste-cat-title">${cat.title}</span>
+        </div>
+        <ul class="waste-sub-list">
+          ${cat.items.map((item, idx) => `<li><b>${cat.no}.${idx+1}</b>${item}</li>`).join('')}
+        </ul>
+      </div>
+    `).join('');
+  }
+  renderWasteList();
+  document.getElementById('wasteSearch').addEventListener('input', (e) => renderWasteList(e.target.value));
+</script>
+
+</body>
+</html>

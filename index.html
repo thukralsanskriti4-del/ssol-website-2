@@ -17,6 +17,8 @@
     --red-glow:#E4453C;
     --clay:#B08159;
     --line:#E2D6C4;
+    --violet:#6D3FA0;
+    --violet-deep:#4A2872;
   }
 
   *{margin:0;padding:0;box-sizing:border-box;}
@@ -38,6 +40,97 @@
   .reveal-delay-2{transition-delay:.2s;}
   .reveal-delay-3{transition-delay:.3s;}
 
+  /* ---------- CUSTOM CURSOR ---------- */
+  @media(min-width:900px){
+    *{cursor:none;}
+    .cursor-dot{
+      position:fixed;top:0;left:0;
+      width:20px;height:20px;
+      pointer-events:none;z-index:10000;
+      transform:translate(-50%,-50%);
+    }
+    .cursor-dot svg{width:100%;height:100%;}
+    .cursor-ring{
+      position:fixed;top:0;left:0;
+      width:36px;height:36px;border-radius:50%;
+      border:1.5px solid var(--clay);
+      pointer-events:none;z-index:9999;
+      transform:translate(-50%,-50%);
+      transition:width .25s ease, height .25s ease, border-color .25s ease, background .25s ease;
+    }
+    .cursor-ring.hovering{
+      width:54px;height:54px;
+      background:rgba(176,129,89,0.1);
+      border-color:var(--clay);
+    }
+  }
+  @media(max-width:899px){
+    .cursor-dot, .cursor-ring{display:none;}
+  }
+
+  /* ---------- INTRO WELCOME ---------- */
+  #introOverlay{
+    position:fixed;inset:0;z-index:10001;
+    background:var(--cream);
+    display:flex;align-items:center;justify-content:center;
+    transition:opacity .9s ease;
+  }
+  #introOverlay.fade-out{opacity:0;pointer-events:none;}
+
+  .intro-inner{
+    position:relative;
+    display:flex;flex-direction:column;align-items:center;
+    transition:transform 1.1s cubic-bezier(.65,0,.35,1);
+  }
+  #introOverlay.slide .intro-inner{
+    transform:translateX(calc(-50vw + 130px));
+  }
+
+  .intro-stage{position:relative;width:260px;height:150px;}
+  .intro-rings{
+    position:absolute;top:50%;left:50%;
+    width:280px;height:auto;
+    transform:translate(-50%,-50%);
+    opacity:0;
+    animation:introFade .8s ease forwards 0s;
+  }
+  .intro-lotus{
+    position:absolute;top:50%;left:50%;
+    width:210px;height:auto;
+    transform:translate(-50%,-50%) scale(.9);
+    opacity:0;
+    animation:introLotusIn .9s ease forwards .6s;
+  }
+  @keyframes introFade{
+    from{opacity:0;}
+    to{opacity:1;}
+  }
+  @keyframes introLotusIn{
+    from{opacity:0;transform:translate(-50%,-50%) scale(.85);}
+    to{opacity:1;transform:translate(-50%,-50%) scale(1);}
+  }
+
+  .intro-line-wrap{
+    display:flex;align-items:center;gap:16px;margin-top:6px;
+    opacity:0;
+    animation:introFade .7s ease forwards 1.9s;
+  }
+  .intro-line{
+    width:0;height:1px;background:var(--clay);
+    animation:introLineGrow .6s ease forwards 2s;
+  }
+  @keyframes introLineGrow{
+    from{width:0;}
+    to{width:70px;}
+  }
+  .intro-tagline{
+    font-family:'Fraunces',serif;font-style:italic;
+    font-size:18px;color:var(--red-deep);text-align:center;
+    letter-spacing:0.02em;white-space:nowrap;
+  }
+
+  #introOverlay.slide .intro-line-wrap{opacity:0;transition:opacity .35s ease;}
+
   /* ---------- NAV ---------- */
   header{
     position:sticky;top:0;left:0;right:0;z-index:100;
@@ -57,8 +150,11 @@
     padding:16px 24px;
   }
   .brand{display:flex;align-items:center;}
-  .brand img{height:36px;width:auto;}
-  nav ul{display:flex;gap:36px;list-style:none;}
+  .brand img{
+    height:46px;width:auto;
+    filter:drop-shadow(0 2px 10px rgba(201,162,75,0.45)) drop-shadow(0 0 18px rgba(201,162,75,0.25));
+  }
+  nav ul{display:flex;gap:26px;list-style:none;flex-wrap:wrap;}
   nav ul li a{
     font-size:13px;font-weight:600;letter-spacing:0.04em;
     color:var(--ink);transition:color .2s ease;
@@ -68,7 +164,7 @@
   .nav-cta{
     background:var(--red);color:#fff;
     padding:11px 24px;font-size:12.5px;font-weight:700;
-    border-radius:100px;letter-spacing:0.03em;
+    border-radius:100px;letter-spacing:0.03em;white-space:nowrap;
   }
   .nav-cta:hover{background:var(--red-deep);}
 
@@ -77,9 +173,9 @@
     position:relative;height:100vh;min-height:640px;
     display:flex;align-items:center;justify-content:center;
     background:
-      linear-gradient(180deg, rgba(20,10,9,0.55) 0%, rgba(20,10,9,0.75) 100%),
-      radial-gradient(circle at 30% 20%, rgba(228,69,60,0.35), transparent 55%),
-      linear-gradient(135deg, #2A1210 0%, #140908 100%);
+      radial-gradient(circle at 50% 0%, rgba(200,30,30,0.5), transparent 60%),
+      linear-gradient(180deg, rgba(60,15,12,0.7) 0%, rgba(30,10,8,0.85) 100%),
+      linear-gradient(135deg, #4A1512 0%, #2A0D0A 100%);
     overflow:hidden;
     margin-top:-84px;
   }
@@ -114,14 +210,21 @@
   }
   .btn-outline-light:hover{border-color:#fff;background:rgba(255,255,255,0.08);}
   .scroll-cue{
-    position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
-    color:#fff;opacity:0.7;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;
-    display:flex;flex-direction:column;align-items:center;gap:8px;
-    animation:bob 2s ease-in-out infinite;
+    position:absolute;bottom:0px;left:50%;transform:translateX(-50%);
+    width:320px;height:160px;
   }
-  .scroll-cue .line{width:1px;height:34px;background:rgba(255,255,255,0.5);}
-  @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
-
+  .scroll-cue .rings{
+    position:absolute;top:50%;left:50%;
+    width:320px;height:auto;
+    transform:translate(-50%,-50%);
+    opacity:0.85;
+  }
+  .scroll-cue .lotus-icon{
+    position:absolute;top:38%;left:50%;
+    width:140px;height:auto;
+    transform:translate(-50%,-50%);
+    z-index:2;
+  }
   /* ---------- MARQUEE ---------- */
   .marquee{background:var(--ink);color:#fff;padding:16px 0;overflow:hidden;}
   .marquee-track{
@@ -204,6 +307,63 @@
   .why-card h3{font-size:16px;font-weight:700;margin-bottom:8px;color:var(--ink);}
   .why-card p{font-size:13.5px;color:var(--ink-soft);}
 
+  /* ---------- SLIDING ICON STRIP ---------- */
+  .icon-strip{background:#fff;padding:70px 0;overflow:hidden;}
+  .icon-strip .section-head{max-width:1280px;margin:0 auto 40px;padding:0 24px;}
+  .icon-track{
+    display:flex;gap:60px;width:max-content;
+    animation:iconScroll 30s linear infinite;
+  }
+  .icon-strip:hover .icon-track{animation-play-state:paused;}
+  .icon-item{
+    display:flex;flex-direction:column;align-items:center;
+    width:150px;text-align:center;flex-shrink:0;
+  }
+  .icon-item img{
+    width:64px;height:64px;object-fit:contain;margin-bottom:14px;
+  }
+  .icon-item span{
+    font-size:13px;font-weight:700;color:var(--ink);
+    line-height:1.4;
+  }
+  @keyframes iconScroll{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-50%);}
+  }
+
+  /* ---------- FACILITIES ---------- */
+  .facilities{background:var(--cream-deep);}
+  .facilities-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;}
+  .facility-card{
+    background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px 22px;
+    text-align:center;transition:.25s ease;
+  }
+  .facility-card:hover{background:var(--red);border-color:var(--red);color:#fff;transform:translateY(-6px);}
+  .facility-card:hover p{color:#fff;}
+  .facility-icon{font-size:30px;margin-bottom:16px;}
+  .facility-card h3{font-size:15px;font-weight:700;margin-bottom:8px;}
+  .facility-card p{font-size:12.5px;color:var(--ink-soft);line-height:1.5;}
+
+  /* ---------- INFRASTRUCTURE GALLERY ---------- */
+  .gallery{background:#fff;}
+  .gallery-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:20px;
+  }
+  .gallery-item{
+    border-radius:16px;overflow:hidden;position:relative;
+    aspect-ratio:4/3;background:var(--cream-deep);
+  }
+  .gallery-item img{
+    width:100%;height:100%;object-fit:cover;
+    transition:transform .4s ease;
+  }
+  .gallery-item:hover img{transform:scale(1.06);}
+  .gallery-item .gallery-tag{
+    position:absolute;bottom:14px;left:14px;
+    background:rgba(20,10,9,0.75);color:#fff;
+    font-size:12px;font-weight:600;padding:6px 14px;border-radius:100px;
+  }
+
   /* ---------- CERTIFICATIONS ---------- */
   .certs{background:var(--cream-deep);}
   .certs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
@@ -253,9 +413,23 @@
   .cta-band p{opacity:0.92;margin-bottom:34px;font-size:15.5px;position:relative;}
   .cta-band .btn-primary{background:#fff;color:var(--red-deep);box-shadow:none;position:relative;}
   .cta-band .btn-primary:hover{background:var(--cream);}
+  .cta-band-buttons{display:flex;gap:16px;justify-content:center;position:relative;flex-wrap:wrap;}
+  .cta-band .btn-outline-light{
+    border-color:rgba(255,255,255,0.6);color:#fff;
+  }
+  .cta-band .btn-outline-light:hover{
+    background:rgba(255,255,255,0.12);border-color:#fff;
+  }
 
   /* ---------- FOOTER ---------- */
-  footer{background:var(--ink);color:#C9C0BB;padding:64px 24px 28px;}
+  footer{
+    background:var(--ink);
+    background-image:
+      radial-gradient(circle at 0 0, transparent 24%, rgba(201,162,75,0.04) 25%, rgba(201,162,75,0.04) 26%, transparent 27%, transparent 74%, rgba(201,162,75,0.04) 75%, rgba(201,162,75,0.04) 76%, transparent 77%, transparent),
+      radial-gradient(circle at 50% 50%, transparent 24%, rgba(201,162,75,0.04) 25%, rgba(201,162,75,0.04) 26%, transparent 27%, transparent 74%, rgba(201,162,75,0.04) 75%, rgba(201,162,75,0.04) 76%, transparent 77%, transparent);
+    background-size:60px 60px;
+    color:#C9C0BB;padding:64px 24px 28px;
+  }
   .footer-inner{
     max-width:1280px;margin:0 auto;
     display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;
@@ -265,6 +439,15 @@
   footer p{font-size:13.5px;color:#A79E98;max-width:320px;}
   footer ul{list-style:none;font-size:13.5px;}
   footer ul li{margin-bottom:10px;color:#A79E98;}
+  .footer-social{display:flex;gap:12px;margin-top:18px;}
+  .footer-social a{
+    width:36px;height:36px;border-radius:50%;
+    background:rgba(255,255,255,0.08);
+    display:flex;align-items:center;justify-content:center;
+    transition:.2s ease;
+  }
+  .footer-social a:hover{background:var(--red);}
+  .footer-social svg{width:16px;height:16px;color:#fff;}
   .footer-bottom{
     border-top:1px solid #382E2C;padding-top:24px;
     max-width:1280px;margin:0 auto;
@@ -273,11 +456,14 @@
   }
 
   @media(max-width:900px){
+    .hero-tree{display:none;}
     .hero-content h1{font-size:38px;}
     nav ul{display:none;}
     .overview-inner{grid-template-columns:1fr;}
     .product-grid{grid-template-columns:1fr;}
     .why-grid{grid-template-columns:1fr 1fr;}
+    .facilities-grid{grid-template-columns:1fr 1fr;}
+    .gallery-grid{grid-template-columns:1fr;}
     .certs-grid{grid-template-columns:1fr;}
     .footer-inner{grid-template-columns:1fr;}
     .cta-band{border-radius:0;margin-bottom:0;}
@@ -287,17 +473,38 @@
 </head>
 <body>
 
+<div class="cursor-dot" id="cursorDot">
+  <svg viewBox="0 0 24 24" fill="none">
+    <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17 1 .1 1.5.1 3.5 0 5.5-2 8-6 1.5-2.5 2-4.5 2-4.5s-2.7.62-5 1.5c-2.5 1-4 2.5-4 2.5s.8-3.5 4-5.5c3-2 8-4.5 8-4.5s-1.3 4.5-4.16 5.7z" fill="#C9A24B"/>
+  </svg>
+</div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<div id="introOverlay">
+  <div class="intro-inner">
+    <div class="intro-stage">
+      <img src="lotus-rings.png" alt="" class="intro-rings">
+      <img src="lotus.png" alt="SSOL Lotus" class="intro-lotus">
+    </div>
+    <div class="intro-line-wrap">
+      <span class="intro-line"></span>
+      <span class="intro-tagline">SSOL - A Step with Cheers of Success in Life</span>
+      <span class="intro-line"></span>
+    </div>
+  </div>
+</div>
+
 <header id="siteHeader">
   <nav>
-    <a href="#" class="brand"><img src="logo.png.jpeg" alt="SSOL Logo"></a>
+    <a href="#" class="brand"><img src="logo.png.png" alt="SSOL Logo"></a>
     <ul>
       <li><a href="#overview">Overview</a></li>
       <li><a href="#products">Products</a></li>
+      <li><a href="#facilities">Facilities</a></li>
+      <li><a href="waste-handled.html">Waste Handled</a></li>
       <li><a href="#certifications">Certifications</a></li>
-      <li><a href="#why">Why Us</a></li>
-      <li><a href="#contact">Contact</a></li>
     </ul>
-    <a href="#contact" class="nav-cta">Get a Quote</a>
+    <a href="contact.html" class="nav-cta">Contact</a>
   </nav>
 </header>
 
@@ -312,7 +519,12 @@
       <a href="#contact" class="btn-outline-light">Talk to Us</a>
     </div>
   </div>
-  <div class="scroll-cue"><span>Scroll</span><span class="line"></span></div>
+  <div class="scroll-cue">
+  <img src="lotus-rings.png" alt="" class="rings">
+  <img src="lotus-rings.png" alt="" class="rings">
+  <img src="lotus-rings.png" alt="" class="rings">
+  <img src="lotus.png" alt="" class="lotus-icon">
+</div>
 </section>
 
 <div class="marquee">
@@ -392,34 +604,127 @@
   </div>
 </section>
 
-<section class="why" id="why">
+<section class="icon-strip">
+  <div class="section-head reveal">
+    <div>
+      <span class="section-tag">Why SSOL</span>
+      <h2>We don't cut corners. We cut friction.</h2>
+    </div>
+  </div>
+  <div class="icon-track" id="iconTrack">
+    <div class="icon-item">
+      <img src="icon-co2.png" alt="Lower CO2 Emissions">
+      <span>Lower CO₂ Emissions</span>
+    </div>
+    <div class="icon-item">
+      <img src="icon-compliance.png" alt="100% Regulatory Compliance">
+      <span>100% Regulatory Compliance</span>
+    </div>
+    <div class="icon-item">
+      <img src="icon-factory.png" alt="Alternative Fuel and Raw Material Solutions">
+      <span>Alternative Fuel & Raw Material Solutions</span>
+    </div>
+    <div class="icon-item">
+      <img src="icon-energy.png" alt="Energy Recovery Systems">
+      <span>Energy Recovery Systems</span>
+    </div>
+    <div class="icon-item">
+      <img src="icon-recycle.png" alt="End-to-End Waste Management">
+      <span>End-to-End Waste Management</span>
+    </div>
+    <div class="icon-item">
+      <img src="icon-logistics.png" alt="Reliable Logistics Network">
+      <span>Reliable Logistics Network</span>
+    </div>
+    <div class="icon-item">
+      <img src="icon-partner.png" alt="Trusted Industry Partner">
+      <span>Trusted Industry Partner</span>
+    </div>
+    <div class="icon-item">
+      <img src="icon-safety.png" alt="Commitment to Safety and Excellence">
+      <span>Commitment to Safety & Excellence</span>
+    </div>
+    <!-- duplicate set for seamless loop -->
+    <div class="icon-item">
+      <img src="icon-co2.png" alt="Lower CO2 Emissions">
+      <span>Lower CO₂ Emissions</span>
+    </div>
+    <div class="icon-item">
+      <img src="icon-compliance.png" alt="100% Regulatory Compliance">
+      <span>100% Regulatory Compliance</span>
+    </div>
+    <div class="icon-item">
+      <img src="icon-factory.png" alt="Alternative Fuel and Raw Material Solutions">
+      <span>Alternative Fuel & Raw Material Solutions</span>
+    </div>
+    <div class="icon-item">
+      <img src="icon-energy.png" alt="Energy Recovery Systems">
+      <span>Energy Recovery Systems</span>
+    </div>
+    <div class="icon-item">
+      <img src="icon-recycle.png" alt="End-to-End Waste Management">
+      <span>End-to-End Waste Management</span>
+    </div>
+    <div class="icon-item">
+      <img src="icon-logistics.png" alt="Reliable Logistics Network">
+      <span>Reliable Logistics Network</span>
+    </div>
+    <div class="icon-item">
+      <img src="icon-partner.png" alt="Trusted Industry Partner">
+      <span>Trusted Industry Partner</span>
+    </div>
+    <div class="icon-item">
+      <img src="icon-safety.png" alt="Commitment to Safety and Excellence">
+      <span>Commitment to Safety & Excellence</span>
+    </div>
+  </div>
+</section>
+
+<section class="facilities" id="facilities">
   <div class="section-inner">
     <div class="section-head reveal">
       <div>
-        <span class="section-tag">Why SSOL</span>
-        <h2>We don't cut corners. We cut friction.</h2>
+        <span class="section-tag">Our Facilities</span>
+        <h2>Integrated waste management, end to end</h2>
+      </div>
+      <p>20+ years of experience. CPCB & SPCB authorized across all facilities.</p>
+    </div>
+    <div class="facilities-grid">
+      <div class="facility-card reveal">
+        <div class="facility-icon">⚙️</div>
+        <h3>Preprocessing (AFR)</h3>
+        <p>Preparing wastes for cement-kiln co-processing.</p>
+      </div>
+      <div class="facility-card reveal reveal-delay-1">
+        <div class="facility-icon">🔥</div>
+        <h3>Common Incineration (TSDFs)</h3>
+        <p>With heat recovery systems.</p>
+      </div>
+      <div class="facility-card reveal reveal-delay-2">
+        <div class="facility-icon">♻️</div>
+        <h3>Recycling & Reprocessing</h3>
+        <p>Converting wastes into reusable materials.</p>
+      </div>
+      <div class="facility-card reveal reveal-delay-3">
+        <div class="facility-icon">🚛</div>
+        <h3>HW Transportation</h3>
+        <p>GPS-enabled fleet, pan-India reach.</p>
+      </div>
+      <div class="facility-card reveal">
+        <div class="facility-icon">🔬</div>
+        <h3>In-house Laboratory</h3>
+        <p>Method-compliant testing & disposal analysis.</p>
       </div>
     </div>
-    <div class="why-grid">
-      <div class="why-card reveal">
-        <div class="why-index">01</div>
-        <h3>Quality Assured</h3>
-        <p>Every batch checked for viscosity and performance before it ships.</p>
+
+    <div class="gallery-grid" style="margin-top:48px;">
+      <div class="gallery-item reveal">
+        <img src="facility-1.jpg.jpeg" alt="SSOL Office Facility">
+        <span class="gallery-tag">Office Premises</span>
       </div>
-      <div class="why-card reveal reveal-delay-1">
-        <div class="why-index">02</div>
-        <h3>Reliable Supply</h3>
-        <p>Bulk and retail orders, delivered on time, every time.</p>
-      </div>
-      <div class="why-card reveal reveal-delay-2">
-        <div class="why-index">03</div>
-        <h3>Performance First</h3>
-        <p>Formulated for real heat, real load, real-world demands.</p>
-      </div>
-      <div class="why-card reveal reveal-delay-3">
-        <div class="why-index">04</div>
-        <h3>Trusted Locally</h3>
-        <p>Grown on repeat business — customers who keep coming back.</p>
+      <div class="gallery-item reveal reveal-delay-1">
+        <img src="facility-2.jpg.jpeg" alt="SSOL Plant Facility">
+        <span class="gallery-tag">Processing Plant</span>
       </div>
     </div>
   </div>
@@ -436,7 +741,7 @@
     </div>
     <div class="certs-grid">
       <div class="cert-card reveal">
-        <img src="iso-9001.jpg" alt="ISO 9001:2015 Certificate" onclick="openLightbox('iso-9001.jpg')">
+        <img src="iso-9001.jpg.jpeg" alt="ISO 9001:2015 Certificate" onclick="openLightbox('iso-9001.jpg')">
         <div class="cert-card-body">
           <h3>ISO 9001:2015</h3>
           <p>Quality Management Systems</p>
@@ -444,7 +749,7 @@
         </div>
       </div>
       <div class="cert-card reveal reveal-delay-1">
-        <img src="iso-14001.jpg" alt="ISO 14001:2015 Certificate" onclick="openLightbox('iso-14001.jpg')">
+        <img src="iso-14001.jpg.jpeg" alt="ISO 14001:2015 Certificate" onclick="openLightbox('iso-14001.jpg')">
         <div class="cert-card-body">
           <h3>ISO 14001:2015</h3>
           <p>Environmental Management Systems</p>
@@ -452,7 +757,7 @@
         </div>
       </div>
       <div class="cert-card reveal reveal-delay-2">
-        <img src="iso-45001.jpg" alt="ISO 45001:2018 Certificate" onclick="openLightbox('iso-45001.jpg')">
+        <img src="iso-45001.jpg.jpeg" alt="ISO 45001:2018 Certificate" onclick="openLightbox('iso-45001.jpg')">
         <div class="cert-card-body">
           <h3>ISO 45001:2018</h3>
           <p>Occupational Health & Safety Management</p>
@@ -472,31 +777,43 @@
   <div class="cta-band reveal">
     <h2>Let's keep you moving.</h2>
     <p>Bulk pricing, product catalogues, or distributor tie-ups — one message away.</p>
-    <a href="mailto:info@ssolindia.com" class="btn-primary">Contact SSOL</a>
+    <div class="cta-band-buttons">
+  <a href="mailto:info@ssolindia.com" class="btn-primary">Contact SSOL</a>
+  <a href="tel:+919818408248" class="btn-outline-light">Talk to Us</a>
+</div>
   </div>
 </section>
 
 <footer>
   <div class="footer-inner">
     <div>
-      <img src="logo.jpg" alt="SSOL Logo" style="height:42px;width:auto;margin-bottom:16px;filter:brightness(1.15);">
+      <img src="logo.png.png" alt="SSOL Logo" style="height:42px;width:auto;margin-bottom:16px;filter:brightness(1.15);">
       <p>Shiv Shakti Oil & Lubricants — premium quality lubricants for automotive and industrial use, based in Bhiwadi, Rajasthan.</p>
+      <div class="footer-social">
+        <a href="https://www.linkedin.com/company/shiv-shakti-oil-lubricants/" target="_blank" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 18.34V9.75H5.67v8.59h2.67zM7 8.6a1.55 1.55 0 1 0 0-3.1 1.55 1.55 0 0 0 0 3.1zm11.34 9.74v-4.7c0-2.52-1.35-3.69-3.15-3.69-1.45 0-2.1.8-2.46 1.36v-1.17h-2.67c.03.75 0 8.2 0 8.2h2.67v-4.58c0-.24.02-.49.09-.66.2-.49.65-1 1.4-1 .99 0 1.38.75 1.38 1.85v4.39h2.74z"/></svg>
+        </a>
+        <a href="mailto:info@ssolindia.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="m4 4 8 8 8-8"/></svg>
+        </a>
+      </div>
     </div>
     <div>
       <h4>Quick Links</h4>
       <ul>
         <li><a href="#overview">Overview</a></li>
         <li><a href="#products">Products</a></li>
+        <li><a href="#facilities">Facilities</a></li>
+        <li><a href="waste-handled.html">Waste Handled</a></li>
         <li><a href="#certifications">Certifications</a></li>
-        <li><a href="#why">Why Us</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
     </div>
     <div>
       <h4>Contact</h4>
       <ul>
         <li>Bhiwadi, Rajasthan</li>
-        <li>info@ssolindia.com</li>
+        <li><a href="mailto:info@ssolindia.com" style="color:inherit;">info@ssolindia.com</a></li>
         <li>+91 981 840 8248</li>
       </ul>
     </div>
@@ -508,12 +825,52 @@
 </footer>
 
 <script>
+  // Intro animation sequence
+  window.addEventListener('load', () => {
+    const overlay = document.getElementById('introOverlay');
+    setTimeout(() => {
+      overlay.classList.add('slide');
+      setTimeout(() => {
+        overlay.classList.add('fade-out');
+        setTimeout(() => overlay.remove(), 900);
+      }, 700);
+    }, 2900);
+  });
+
+  // Custom cursor with trailing ring
+  const cursorDot = document.getElementById('cursorDot');
+  const cursorRing = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursorDot.style.left = mouseX + 'px';
+    cursorDot.style.top = mouseY + 'px';
+  });
+
+  function animateRing(){
+    ringX += (mouseX - ringX) * 0.15;
+    ringY += (mouseY - ringY) * 0.15;
+    cursorRing.style.left = ringX + 'px';
+    cursorRing.style.top = ringY + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button, input, .product-card, .cert-card, .facility-card, .gallery-item').forEach(el => {
+    el.addEventListener('mouseenter', () => cursorRing.classList.add('hovering'));
+    el.addEventListener('mouseleave', () => cursorRing.classList.remove('hovering'));
+  });
+
+  // Sticky header background on scroll
   const header = document.getElementById('siteHeader');
   window.addEventListener('scroll', () => {
     if (window.scrollY > 60) header.classList.add('scrolled');
     else header.classList.remove('scrolled');
   });
 
+  // Scroll reveal animations
   const revealEls = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -522,6 +879,7 @@
   }, { threshold: 0.15 });
   revealEls.forEach(el => io.observe(el));
 
+  // Certificate lightbox
   function openLightbox(imgSrc){
     document.getElementById('lightboxImg').src = imgSrc;
     document.getElementById('certLightbox').classList.add('active');
