@@ -317,7 +317,6 @@
     display:flex;gap:60px;width:max-content;
     animation:iconScroll 30s linear infinite;
   }
-  .icon-strip:hover .icon-track{animation-play-state:paused;}
   .icon-item{
     display:flex;flex-direction:column;align-items:center;
     width:150px;text-align:center;flex-shrink:0;
@@ -370,19 +369,31 @@
   /* ---------- CERTIFICATIONS ---------- */
   .certs{background:var(--cream-deep);}
   .certs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
-  .cert-card{
-    background:#fff;border:1px solid var(--line);border-radius:20px;
-    overflow:hidden;transition:.3s ease;
-  }
-  .cert-card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 28px 56px -30px rgba(200,30,30,0.35);
-  }
-  .cert-card img{
-    width:100%;height:280px;object-fit:cover;object-position:top;
-    border-bottom:1px solid var(--line);cursor:pointer;
-  }
-  .cert-card-body{padding:24px 26px;}
+.cert-card{
+  position:relative;
+  background:#fff;border:1px solid var(--line);border-radius:20px;
+  overflow:hidden;transition:.3s ease;
+}
+.cert-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 28px 56px -30px rgba(200,30,30,0.35);
+}
+.cert-card img{
+  width:100%;height:400px;object-fit:cover;object-position:top;
+  cursor:pointer;display:block;
+}
+.cert-card-body{
+  position:absolute;left:0;right:0;bottom:0;
+  padding:24px 26px;
+  background:#fff;
+  transform:translateY(100%);
+  opacity:0;
+  transition:transform .35s ease, opacity .35s ease;
+}
+.cert-card:hover .cert-card-body{
+  transform:translateY(0);
+  opacity:1;
+}
   .cert-card h3{font-size:19px;font-weight:600;color:var(--ink);margin-bottom:6px;}
   .cert-card p{font-size:13.5px;color:var(--ink-soft);margin-bottom:4px;}
   .cert-card .valid{
@@ -397,6 +408,20 @@
   }
   .lightbox.active{display:flex;}
   .lightbox img{max-width:90%;max-height:90vh;border-radius:12px;}
+  .lightbox-content{position:relative;display:inline-block;}
+.lightbox-content img{max-width:90%;max-height:90vh;border-radius:12px;display:block;}
+.lightbox-valid{
+  position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
+  background:var(--cream-deep);color:var(--red-deep);
+  font-size:13px;font-weight:700;padding:8px 20px;border-radius:100px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.3);
+  opacity:0;animation:validPop .4s ease forwards .25s;
+  white-space:nowrap;
+}
+@keyframes validPop{
+  from{opacity:0;transform:translateX(-50%) translateY(12px);}
+  to{opacity:1;transform:translateX(-50%) translateY(0);}
+}
   .lightbox-close{
     position:absolute;top:28px;right:36px;color:#fff;font-size:32px;
     cursor:pointer;font-weight:300;
@@ -744,7 +769,7 @@
     </div>
     <div class="certs-grid">
       <div class="cert-card reveal">
-        <img src="iso-9001.jpg.jpeg" alt="ISO 9001:2015 Certificate" onclick="openLightbox('iso-9001.jpg')">
+        <img src="iso-9001.jpg.jpeg" alt="ISO 9001:2015 Certificate" onclick="openLightbox('iso-9001.jpg','Valid till 10/07/2027')">
         <div class="cert-card-body">
           <h3>ISO 9001:2015</h3>
           <p>Quality Management Systems</p>
@@ -752,7 +777,7 @@
         </div>
       </div>
       <div class="cert-card reveal reveal-delay-1">
-        <img src="iso-14001.jpg.jpeg" alt="ISO 14001:2015 Certificate" onclick="openLightbox('iso-14001.jpg')">
+        <img src="iso-14001.jpg.jpeg" alt="ISO 14001:2015 Certificate" onclick="openLightbox('iso-14001.jpg','Valid till 10/07/2027')">
         <div class="cert-card-body">
           <h3>ISO 14001:2015</h3>
           <p>Environmental Management Systems</p>
@@ -760,7 +785,7 @@
         </div>
       </div>
       <div class="cert-card reveal reveal-delay-2">
-        <img src="iso-45001.jpg.jpeg" alt="ISO 45001:2018 Certificate" onclick="openLightbox('iso-45001.jpg')">
+        <img src="iso-45001.jpg.jpeg" alt="ISO 45001:2018 Certificate" onclick="openLightbox('iso-45001.jpg','Valid till 10/07/2027')">
         <div class="cert-card-body">
           <h3>ISO 45001:2018</h3>
           <p>Occupational Health & Safety Management</p>
@@ -773,7 +798,10 @@
 
 <div class="lightbox" id="certLightbox" onclick="closeLightbox()">
   <span class="lightbox-close">&times;</span>
-  <img id="lightboxImg" src="" alt="Certificate Full View">
+  <div class="lightbox-content" onclick="event.stopPropagation()">
+    <img id="lightboxImg" src="" alt="Certificate Full View">
+    <span class="lightbox-valid" id="lightboxValid"></span>
+  </div>
 </div>
 
 <section id="contact" style="padding-top:0;">
@@ -787,7 +815,7 @@ color:var(--red);
 font-size:20px;
 top:30px;
 center:120px;
-z-index:999999;" class="btn-primary">Contact Us</a>
+z-index:999999;" class="btn-primary">Let's Connect</a>
 </div>
   </div>
 </section>
@@ -888,10 +916,11 @@ z-index:999999;" class="btn-primary">Contact Us</a>
   revealEls.forEach(el => io.observe(el));
 
   // Certificate lightbox
-  function openLightbox(imgSrc){
-    document.getElementById('lightboxImg').src = imgSrc;
-    document.getElementById('certLightbox').classList.add('active');
-  }
+  function openLightbox(imgSrc, validText){
+  document.getElementById('lightboxImg').src = imgSrc;
+  document.getElementById('lightboxValid').textContent = validText;
+  document.getElementById('certLightbox').classList.add('active');
+}
   function closeLightbox(){
     document.getElementById('certLightbox').classList.remove('active');
   }
