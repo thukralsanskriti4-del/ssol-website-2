@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
 
 *{
 margin:0;
@@ -22,6 +23,10 @@ scroll-behavior:smooth;
 }
 
 body{
+background:var(--cream) url('about-bg.png');
+background-size:cover;
+background-attachment:fixed;
+background-position:center;
 background:#F7F2EA;
 font-family:'Manrope',sans-serif;
 color:#221A18;
@@ -38,6 +43,15 @@ overflow-x:hidden;
 --border:#E5D8C8;
 --gold:#D9B54A;
 --gold-deep:#B08159;
+ --cream:#F7F2EA;
+    --cream-deep:#EFE6D8;
+    --ink:#221A18;
+    --ink-soft:#6E625C;
+    --red:#C81E1E;
+    --red-deep:#7A1315;
+    --red-glow:#E4453C;
+    --clay:#B08159;
+    --line:#E2D6C4;
 --shadow:0 25px 60px rgba(0,0,0,.08);
 }
 
@@ -254,7 +268,7 @@ footer ul li{margin-bottom:10px;color:#A79E98;}
   .founders-grid{grid-template-columns:1fr;}
   .footer-inner{grid-template-columns:1fr;}
 
-  .timeline-line{left:30px;}
+  
   .timeline-item{width:100%;left:0 !important;text-align:left !important;padding:0 0 50px 60px;}
   .timeline-item .timeline-dot{left:10px !important;right:auto !important;}
   .timeline-item .timeline-card{margin-left:0 !important;}
@@ -304,32 +318,6 @@ footer ul li{margin-bottom:10px;color:#A79E98;}
     </p>
   </div>
 
-  <svg class="hero waves"
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 1440 320">
-    <path
-      fill="#C9A24B"
-      fill-opacity="0.1"
-      d="M0,192L120,197.3L240,208L360,197.3L480,224L600,256L720,256L840,224L960,192L1080,224L1200,256L1320,256L1440,224L1440,320L1320,320L1200,320L1080,320L960,320L840,320L720,320L600,320L480,320L360,320L240,320L120,32₀L₀,3₂₀Z">
-    </path>
-    <defs> == $0
-      <path id="wave-path" d="M-160 44c30 0 58-18 88-18s58 18 88 18 58-18 88-18 58 18 88 18v44h-352z">
-      </path> 
-    </defs>
-    <g class="wave1">
-      <use href="#wave-path" x="50" y="0" fill="rgba(201,162,75,0.3)">
-      </use>
-    </g>
-    <g class="wave2">
-      <use href="#wave-path" x="50" y="3" fill="rgba(201,162,75,0.5)">
-      </use>
-    </g>
-    <g class="wave3">
-      <use href="#wave-path" x="50" y="6" fill="rgba(201,162,75,0.7)">
-      </use>
-    </g>
-  </svg>
-
   <div class="story-card">
     <p>
       Shiv Shakti Oil & Lubricants (SSOL) was built on a simple idea: nothing should go to waste
@@ -373,8 +361,7 @@ footer ul li{margin-bottom:10px;color:#A79E98;}
 
   <div class="timeline-section">
     <div class="timeline-wrap">
-      <div class="timeline-line"></div>
-      <img src="timeline-bg.png" alt="Timeline Background" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.05;pointer-events:none;">
+      <img src="timeline-bg.png" alt="Timeline Background" style="position:absolute;top:0;left:0;width:160%;height:112.5%;opacity:0.40;pointer-events:none;">
       <div class="timeline-item">
         <div class="timeline-dot"></div>
         <div class="timeline-year">2003</div>
