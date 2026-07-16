@@ -112,6 +112,44 @@
     padding:10px 22px;border-radius:100px;transition:.2s ease;
   }
   .back-link:hover{background:rgba(255,255,255,0.1);border-color:#fff;color:#fff;}
+  .form-buttons{
+  display:flex;justify-content:center;gap:24px;margin-top:40px;flex-wrap:wrap;
+}
+.form-card{
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.25);
+  border-radius:18px;
+  padding:24px 28px;
+  display:flex;align-items:center;gap:18px;
+  text-align:left;
+  min-width:280px;
+  transition:.25s ease;
+}
+.form-card:hover{
+  background:rgba(255,255,255,0.1);
+  border-color:rgba(255,255,255,0.5);
+  transform:translateY(-4px);
+}
+.form-card-text{flex:1;}
+.form-card-text .form-label{
+  font-size:11.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--red-glow);margin-bottom:6px;display:block;
+}
+.form-card-text h3{
+  font-size:18px;font-weight:600;color:#fff;margin-bottom:2px;
+}
+.form-card-text span.sub{
+  font-size:12.5px;color:#C9BFB8;
+}
+.form-download-btn{
+  width:44px;height:44px;flex-shrink:0;
+  border-radius:50%;
+  background:var(--red);
+  display:flex;align-items:center;justify-content:center;
+  transition:.2s ease;
+}
+.form-download-btn:hover{background:var(--red-deep);}
+.form-download-btn svg{width:18px;height:18px;color:#fff;}
 
   /* ---------- SECTION SHARED ---------- */
   section{padding:70px 24px 110px;}
@@ -190,6 +228,7 @@
   @media(max-width:900px){
     nav ul{display:none;}
     .page-hero h1{font-size:30px;}
+    .form-buttons{flex-direction:column;align-items:stretch;}
     .waste-sub-list{grid-template-columns:1fr;}
     .footer-inner{grid-template-columns:1fr;}
   }
@@ -210,7 +249,7 @@
     <ul>
       <li><a href="index.html#overview">Overview</a></li>
       <li><a href="index.html#products">Products</a></li>
-      <li><a href="index.html#facilities">Facilities</a></li>
+      <li><a href="facilities.html">Facilities</a></li>
       <li><a href="waste-handled.html">Waste Handled</a></li>
       <li><a href="index.html#certifications">Certifications</a></li>
       <li><a href="about.html">About Us</a></li>
@@ -223,6 +262,37 @@
   <span class="eyebrow">Permitted Categories</span>
   <h1>Hazardous Waste We Handle</h1>
   <p>SSOL is authorized by CPCB and SPCBs to handle 100+ Hazardous Waste sub-categories under Schedule-I, spanning petrochemical, metal, pharmaceutical, textile, and chemical industries.</p>
+  <div class="form-buttons">
+  <div class="form-card">
+    <a href="rajasthan-membership-form.pdf" target="_blank" class="form-view-link form-card-text">
+      <span class="form-label">Membership Form</span>
+      <h3>Rajasthan</h3>
+      <span class="sub">View application form</span>
+    </a>
+    <a href="rajasthan-membership-form.pdf" download class="form-download-btn" aria-label="Download Rajasthan Membership Form">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3v12"/>
+        <path d="m7 11 5 5 5-5"/>
+        <path d="M5 20h14"/>
+      </svg>
+    </a>
+  </div>
+
+  <div class="form-card">
+    <a href="other-states-membership-form.pdf" target="_blank" class="form-view-link form-card-text">
+      <span class="form-label">Membership Form</span>
+      <h3>Other States</h3>
+      <span class="sub">View application form</span>
+    </a>
+    <a href="other-states-membership-form.pdf" download class="form-download-btn" aria-label="Download Other States Membership Form">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3v12"/>
+        <path d="m7 11 5 5 5-5"/>
+        <path d="M5 20h14"/>
+      </svg>
+    </a>
+  </div>
+</div>
   <a href="index.html" class="back-link">← Back to Home</a>
 </div>
 
@@ -255,7 +325,7 @@
       <ul>
         <li><a href="index.html#overview">Overview</a></li>
         <li><a href="index.html#products">Products</a></li>
-        <li><a href="index.html#facilities">Facilities</a></li>
+        <li><a href="facilities.html">Facilities</a></li>
         <li><a href="waste-handled.html">Waste Handled</a></li>
         <li><a href="index.html#certifications">Certifications</a></li>
         <li><a href="contact.html">Contact</a></li>
