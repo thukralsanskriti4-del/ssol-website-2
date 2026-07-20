@@ -114,23 +114,24 @@ nav ul li a:hover{color:var(--red);}
 
 /* ---------- SHARED WRAPPER / HEADING ---------- */
 .page-wrapper{max-width:1200px;margin:auto;padding:80px 10px 0;}
-
+.hero-wrap{
+  position: relative;
+  width: 100%;
+  background: #F6E6CC url('background.png') center top / cover no-repeat;
+  overflow: hidden;
+}
 .page-heading{
   position:relative;
   width:100vw;
   left:50%;
   margin-left:-50vw;
   margin-top:-80px;
-  margin-bottom:0;
-  padding:110px 20px 70px;
-  overflow:hidden;
+  margin-bottom:-10;
+  padding:110px 20px 180px;   /* stats ke liye extra space */
+  overflow:visible;
   text-align:center;
-  background-image:url('background.png');
-  background-repeat:no-repeat;
-  background-size:cover;
-  background-position:center;
-  opacity:1.0;
-  z-index:0;
+  background:transparent
+  z-index2;
 }
 .page-heading::before,
 .page-heading::after{
@@ -155,14 +156,16 @@ nav ul li a:hover{color:var(--red);}
   font-size:52px;font-weight:600;color:#221A18;margin-bottom:18px;
 }
 .page-heading p{
-  font-size:17px;color:#6D625C;max-width:620px;margin:auto;line-height:1.8;
+  font-size:21px;color:#8A1D22;max-width:700px;margin:auto;line-height:1.85;
 }
 .heading-divider{
-  width:120px;height:2px;background:#D9C7AF;margin:30px auto;position:relative;
+  width:120px;height:2px;
+  background:linear-gradient(to right, #D9C7AF 0%, #D9C7AF 40%, transparent 40%, transparent 60%, #D9C7AF 60%, #D9C7AF 100%);
+  margin:30px auto;position:relative;
 }
 .heading-divider::after{
   content:"◆";position:absolute;left:50%;top:-13px;transform:translateX(-50%);
-  background:#F7F2EA;padding:0 12px;font-size:18px;color:#8A1D22;
+  background:transparent;padding:0 12px;font-size:18px;color:#8A1D22;
 }
 
 .previous-section{
@@ -197,6 +200,7 @@ nav ul li a:hover{color:var(--red);}
     margin-top:-65px;
     margin-bottom:0px;
     background:transparent;
+    z-index:1;
 }
 
 .wave-divider::before{
@@ -206,7 +210,6 @@ nav ul li a:hover{color:var(--red);}
     top:0;
     width:100%;
     height:300px;   
-    background:url("background.png") center top/cover no-repeat;
     z-index:-1;
 }
 
@@ -343,18 +346,16 @@ nav ul li a:hover{color:var(--red);}
     padding:0 0 40px;
 
     background-image:url('timeline tree bg.png');
-    background-repeat:repeat-y;
+    background-repeat:no-repeat;
     background-size:cover;
+    background-attachment:fixed;
     background-position:center top;
 }
 .section-tag-wrap{
     margin-top:0;
     padding-top:0;
     text-align:center;margin-bottom:56px;
-    background:var(--cream) url('timeline tree bg.png');
-    background-size:cover;
-    background-attachment:fixed;
-    background-position:center;
+    background:transparent;
     color:var(--ink);
     font-family:'Manrope',sans-serif;
     line-height:1.6;
@@ -367,10 +368,7 @@ nav ul li a:hover{color:var(--red);}
 }
 
 .founders-grid{
-  background:var(--cream) url('timeline tree bg.png');
-    background-size:cover;
-    background-attachment:fixed;
-    background-position:center;
+  background:transparent;
     color:var(--ink);
     font-family:'Manrope',sans-serif;
     line-height:1.6;
@@ -426,10 +424,7 @@ nav ul li a:hover{color:var(--red);}
 
 /* ---------- TIMELINE ---------- */
 .timeline-section{margin-bottom:1px;
-    background:var(--cream) url('timeline tree bg.png');
-    background-size:cover;
-    background-attachment:fixed;
-    background-position:center;
+    background:transparent;
     color:var(--ink);
     font-family:'Manrope',sans-serif;
     line-height:1.6;
@@ -558,6 +553,7 @@ footer ul li{margin-bottom:10px;color:#A79E98;}
   </nav>
 </header>
 
+<div class="hero-wrap">
 <div class="page-wrapper">
 
   <div class="page-heading">
@@ -691,7 +687,7 @@ C850,20 1040,170 1200,85"/>
 </svg>
 
 </div>
-
+</div>
 </div>
 
 </div>
